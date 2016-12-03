@@ -1,0 +1,198 @@
+<script>
+/*
+ * Copyright 2016 Joey  <joeyye@foxmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+</script>
+<html>
+<head>
+    <style>
+      body {
+        background: white;
+        color:#CCCCCC; 
+      }
+      canvas {
+        float: left;
+        border :0px solid #444444;
+        padding:0px;
+        margin: 0px;
+        background:#3B3B3B;
+      }
+    </style>
+
+<script src=settings.js></script>
+<script language="JavaScript"> 
+var mouseevent0={x:0,y:0};
+var mouseevent={};
+var keycode=0;
+var videoWidth=1200;
+var videoHeight=1920;
+
+function onrefresh()
+{
+	window.location.href=window.location.origin; 
+}
+function onhome()
+{
+	drawscreen.sendInputCmd("keyevent=3");
+}
+function onlock()
+{
+	if(settings.arch=="arm"||settings.arch=="arm64")
+	  drawscreen.sendInputCmd("keyevent=26");
+	if(settings.arch=="x86"||settings.arch=="x86_64")
+	  drawscreen.sendInputCmd("keyevent=82");
+}
+function onexec()
+{
+	document.getElementById('result').textContent="";
+	cmd_input=document.getElementById('cmd');
+	drawscreen.sendExecuteCmd("command="+cmd_input.value);
+	cmd_input.value="";
+}
+function transfercoord(e,mouseevent){
+	var screen=document.getElementById("screen");
+	mouseevent.x=parseInt(e.clientX);
+	mouseevent.y=parseInt(e.clientY);
+	mouseevent.x=mouseevent.x*videoWidth/output.width-output.offsetLeft;
+	mouseevent.y=mouseevent.y*videoHeight/output.height-output.offsetTop;
+	mouseevent.button=parseInt(e.which);
+}
+window.onkeydown = function(ev){
+	keycode=ev.keyCode;
+	if(keycode==27){
+	    drawscreen.sendInputCmd("keyevent=82");
+	}
+	if(keycode==115){ //F4
+		window.location.href=window.location.origin; 
+	}
+}
+window.onmousemove=function(e){
+	mouseevent.ev=0;
+	transfercoord(e,mouseevent);
+}
+window.onmousedown=function(e){
+	mouseevent.ev=1;
+	transfercoord(e,mouseevent);
+    mouseevent0.x=mouseevent.x;
+	mouseevent0.y=mouseevent.y;
+}
+window.onmouseup=function(e){
+	mouseevent.ev=2;
+	transfercoord(e,mouseevent);
+	if(mouseevent.button==1){
+		drawscreen.sendInputCmd("swipe=location&x1="+mouseevent0.x+"&y1="+mouseevent0.y+"&x2="+mouseevent.x+"&y2="+mouseevent.y);
+	}
+}
+window.ondragend=function(e){
+	transfercoord(e,mouseevent);
+	drawscreen.sendInputCmd("swipe=location&x1="+mouseevent0.x+"&y1="+mouseevent0.y+"&x2="+mouseevent.x+"&y2="+mouseevent.y);
+}
+
+var drawscreen = {
+  callback: function() {
+    self = this;
+    if (this.video.paused || this.video.ended) {
+		self.video.src=self.videourl;
+		self.video.play();
+      return;
+    }
+    this.drawFrame();
+    setTimeout(function () {
+        self.callback();
+      }, 0);
+  },
+
+  load: function(url) {
+    this.video = document.getElementById("screen");
+    this.c = document.getElementById("output");
+    this.ctx = this.c.getContext("2d");
+	this.videourl =url;
+    self = this;
+	self.width  = self.c.width;
+	self.height = self.c.height;
+	self.callback();
+    this.video.addEventListener("play", function() {
+		if(this.videoWidth>0 && this.videoHeight >0){
+			videoWidth=this.videoWidth ;
+			videoHeight=this.videoHeight ;
+		}
+        self.callback();
+      }, false);
+  },
+
+  drawFrame: function() {
+    this.ctx.drawImage(this.video, 0, 0, this.width, this.height);
+    return;
+  },
+  sendExecuteCmd: function(str){
+		var url=window.location.origin+"/scripts/execute.lua?"+str;
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(data){
+			if(this.readyState == this.DONE){
+				if(this.status == 200){
+					document.getElementById('result').textContent=this.responseText;
+				}
+			}
+		 };
+		 xhr.open("GET", url);
+		 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		 xhr.send();
+  }, 
+  sendInputCmd: function(str){
+		var url=window.location.origin+"/input?"+str;
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(data){
+			if(this.readyState == this.DONE){
+				if(this.status == 200){
+					this.src=self.videourl;
+					self.video.play();
+				}
+			}
+		 };
+		 xhr.open("POST", url);
+		 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		 xhr.send();
+	}
+};
+
+</script> 
+
+</head>
+<body>
+<div>
+		<canvas id="output" width=480 height=800></canvas>
+		<video id="screen" src='scripts/getframebuffer.lua' autoplay="autoplay" width=480 height=800 hidden="hidden"></video>
+		<script>
+			drawscreen.load('scripts/getframebuffer.lua');
+		</script>
+</div>
+
+<div>
+<input id="cmd" type="text" name="commad" style="width:725px;height:20px;" >
+<button onclick="onexec()">execute</button>
+<br>
+<textarea id="result" rows="25" cols="100">
+</textarea>
+<br>
+<button onclick="onhome()">home</button>
+<button onclick="onlock()">lock/unlock</button>
+<button onclick="onrefresh()">refresh</button>
+
+</div>
+
+
+</body>
+
+</html>

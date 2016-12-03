@@ -1,0 +1,29 @@
+{
+        "remote":{
+	    "control":true,
+	    "ignoreid":true,
+	    "showfps":true
+	},
+	"objects":{
+		"scale": 1,
+	       "baseUrl": "data",
+	       "baseobjs":{
+		       "body":{"obj":"sydney.js", "textures":["sydney.jpg"]}
+	       },
+	       "objs":[
+		  {"position":[0,0,0],"rotation":[0,3.1415927,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 0}]} ]}
+	       ]
+       },
+
+        "scene":{
+		"camera":{
+		   "PerspectiveCamera":[70,0,1,3000],
+		   "position":[0, 5, 0]
+		},
+		"renderer":{
+		   "setClearColor":{"rgb":6579596,"alpha":1},
+		   "shadowMapType":2
+		}
+	}
+
+}

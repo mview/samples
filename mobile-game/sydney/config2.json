@@ -1,0 +1,55 @@
+{
+        "remote":{
+	    "control":true,
+	    "ignoreid":true,
+	    "showfps":true
+	},
+	"objects":{
+		"scale": 1,
+	       "baseUrl": "data",
+	       "baseobjs":{
+		       "body":{"obj":"sydney.js", "textures":["sydney.jpg"]}
+	       },
+	       "objs":[
+		  {"position":[0,25,0],"rotation":[0,3.1415927,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 0}]} ]}
+	       ]
+       },
+
+        "scene":{
+		"camera":{
+		   "PerspectiveCamera":[70,0,1,3000],
+		   "position":[0, 5, 0]
+		},
+		"DirectionalLight":{
+		   "attrib":[16777215,2.25],
+		   "position":[200, 450, 500],
+		   "castShadow":true,
+		   "shadowMapWidth":1024,
+		   "shadowMapHeight":1024,
+		   "shadowMapDarkness":0.95,
+		   "shadowCascade":true,
+		   "shadowCascadeCount":3,
+		   "shadowCascadeNearZ":[ -1.000, 0.995, 0.998 ],
+		   "shadowCascadeFarZ":[  0.995, 0.998, 1.000 ],
+		   "shadowCascadeWidth":[ 1024, 1024, 1024 ],
+		   "shadowCascadeHeight":[ 1024, 1024, 1024 ]
+		 },
+		"renderer":{
+		   "setClearColor":{"rgb":6579596,"alpha":1},
+		   "shadowMapType":2
+		},
+		"mesh":{
+		   "geometry":{"PlaneGeometry":[16000, 16000]},
+		   "material":{"MeshPhongMaterial":{"color":16777215,
+		      "map":{"url":"data/grass.jpg",
+		             "repeat":[64, 64],
+			     "wrapS":1000,
+			     "wrapT":1000
+			    }
+			}},
+		   "rotation":[-1.5707963267948966,0,0],
+		   "receiveShadow":1
+		}
+	}
+
+}

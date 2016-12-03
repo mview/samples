@@ -1,0 +1,79 @@
+{
+        "remote":{
+	    "control":true,
+	    "ignoreid":true,
+	    "showfps":true
+	},
+	"objects":{
+		"scale": 2,
+	       "baseUrl": "data",
+	       "baseobjs":{
+		       "body":{"obj":"ogro-light.js","textures":[ "grok.jpg", "ogrobase.png", "arboshak.png", "ctf_r.png", "ctf_b.png", "darkam.png", "freedom.png",
+				 "gib.png", "gordogh.png", "igdosh.png", "khorne.png", "nabogro.png","sharokh.png" ]
+			      },
+		      "sydney":{"obj":"sydney.js", "textures":["sydney.jpg"]},
+		       "weapon":{"obj":"weapon-light.js", "textures":["weapon.jpg"]}
+	       },
+	       "objs":[
+		  {"position":[0,45,500],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"sydney","tex": 0}]} ]},
+		  {"position":[-975,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 0}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[-825,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 1}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[-675,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 2}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[-525,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 3}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[-375,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 4}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[-225,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 5}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ -75,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 6}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[  75,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 7}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ 225,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 8}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ 375,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex": 9}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ 525,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex":10}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ 675,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex":11}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]},
+		  {"position":[ 825,30,0],"rotation":[0,-1.57079635,0],"subs":[ {"active":0,"objs":[{"obj":"body","tex":12}]}, {"active":0,"objs":[{"obj":"weapon","tex":0}]}]}
+	       ]
+       },
+
+        "scene":{
+		"camera":{
+		   "PerspectiveCamera":[70,0,1,3000],
+		   "position":[0, 5, 0]
+		},
+		"fog":[16777215,1000, 4000],
+		"AmbientLight":2236962,
+		"DirectionalLight":{
+		   "attrib":[16777215,2.25],
+		   "position":[200, 450, 500],
+		   "castShadow":true,
+		   "shadowMapWidth":1024,
+		   "shadowMapHeight":1024,
+		   "shadowMapDarkness":0.95,
+		   "shadowCascade":true,
+		   "shadowCascadeCount":3,
+		   "shadowCascadeNearZ":[ -1.000, 0.995, 0.998 ],
+		   "shadowCascadeFarZ":[  0.995, 0.998, 1.000 ],
+		   "shadowCascadeWidth":[ 1024, 1024, 1024 ],
+		   "shadowCascadeHeight":[ 1024, 1024, 1024 ]
+		 },
+		"renderer":{
+		   "antialias":true,
+		   "setClearColor":{"rgb":"fog","alpha":1},
+		   "gammaInput":true,
+		   "gammaOutput":true,
+		   "shadowMapEnabled":true,
+		   "shadowMapCascade":true,
+		   "shadowMapType":2
+		},
+		"mesh":{
+		   "geometry":{"PlaneGeometry":[16000, 16000]},
+		   "material":{"MeshPhongMaterial":{"color":16777215,
+		      "map":{"url":"data/grass.jpg",
+		             "repeat":[64, 64],
+			     "wrapS":1000,
+			     "wrapT":1000
+			    }
+			}},
+		   "rotation":[-1.5707963267948966,0,0],
+		   "receiveShadow":1
+		}
+	}
+
+}

@@ -1,0 +1,6 @@
+{
+    "index": "sydney1",
+    "sydney1": {"url":"sydney","config":"config1.json","control":"control1.json"},
+    "sydney2": {"url":"sydney","config":"config2.json","control":"control2.json"},
+    "sydney3": {"url":"sydney","config":"config3.json","control":"control3.json"}
+}
