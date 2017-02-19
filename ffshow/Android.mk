@@ -13,7 +13,7 @@
 # limitations under the License.
 
 LOCAL_PATH:= $(call my-dir)
-PREBUILD_LIB_DIR:=$(SDK_HOME)/prebuild/$(ANDROID_VER)/lib/$(TARGET_ARCH)/
+PREBUILD_LIB_DIR:=$(NDK_EXT_HOME)/prebuild/$(ANDROID_VER)/lib/$(TARGET_ARCH)/
 PREBUILD_3RDPARTY_LIB_DIR:=3rdparty/lib/$(TARGET_ARCH)/
 
 $(info Android Version $(ANDROID_VER))
@@ -37,18 +37,18 @@ LOCAL_MODULE:= ffshow
 
 LOCAL_C_INCLUDES +=$(LOCAL_PATH)/3rdparty/include/ffmpeg/ \
 		$(LOCAL_PATH)/3rdparty/include/ffmpeg/libavutil \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/external/libva \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/system/core/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/opengl/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/opengl/tests/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/hardware/libhardware/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/external/drm/include/drm \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/kernel/uapi \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/kernel/uapi/asm-$(TARGET_ARCH_ABI) \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/bionic/libm/include \
-		$(SDK_HOME)/dep_files/$(ANDROID_VER)/external/libcxx/include 
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/external/libva \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/system/core/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/opengl/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/opengl/tests/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/frameworks/native/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/hardware/libhardware/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/external/drm/include/drm \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/kernel/uapi \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/bionic/libc/kernel/uapi/asm-$(TARGET_ARCH_ABI) \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/bionic/libm/include \
+		$(NDK_EXT_HOME)/dep_files/$(ANDROID_VER)/external/libcxx/include 
 
 		
 LOCAL_CFLAGS := -DGL_GLEXT_PROTOTYPES -DEGL_EGLEXT_PROTOTYPES -DUSE_GLES_VERSION=2 -DUSE_VA_DRM -DUSE_EGL -D__STDC_CONSTANT_MACROS -std=c++0x  

@@ -1,4 +1,5 @@
 build for android 5.0
+export PATH=~/android-ndk-r10e/ndk-build:$PATH
 NDK_EXT_HOME=/opt/ndk-ext VER=5.0 DIR=wcap /opt/ndk-ext/build/build.sh
 
 clear
