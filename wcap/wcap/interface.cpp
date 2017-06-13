@@ -29,10 +29,25 @@ extern "C" {
 #endif
 
 static lua_State *L;
+void sendrmsg(int fd,int n)
+{
+    const char* rmsg="HTTP/1.1 200 OK\r\n"
+        "Server: httpd/0.1.0\r\n"
+        "Content-Length: ";
+    char head[512];
+    sprintf(head,"%s%d\r\n\r\n",rmsg,n);
+    int len=strlen(head);
+    write(fd,head,len);
+}
 static void sendframe2socket(int fd,const char *filename)
 {
 	FILE *fp;
+    int n;
 	fp=fopen(filename,"rb");
+    fseek(fp,0L,SEEK_END);
+    n=ftell(fp); 
+    fseek(fp,0L,SEEK_SET); 
+    sendrmsg(fd,n);
 	while(!feof(fp)){
 		char buf[1024];
 		int len;
@@ -44,26 +59,25 @@ static void sendframe2socket(int fd,const char *filename)
 static void fdsend(int fd,const char *title,const  char *head,const  char *body)
 {
     if(title==NULL && head==NULL){
+        sendrmsg(fd,strlen(body));
 		write(fd,body,strlen(body));
 		return;
 	}
 	char buffer[4096];
-	sprintf(buffer,"<HEAD><TITLE>HTTP Server Message</TITLE></HEAD>\n<BODY>\n");
-	write(fd,buffer,strlen(buffer));
+    int n;
+	n=sprintf(buffer,"<HEAD><TITLE>HTTP Server Message</TITLE></HEAD>\n<BODY>\n");
 	if(title) {
-		sprintf(buffer,"<H1>%s</H1>\n",title);
-		write(fd,buffer,strlen(buffer));
+		n+=sprintf(&buffer[n],"<H1>%s</H1>\n",title);
 	}
 	if(head) {
-		sprintf(buffer,"<H2>%s</H2>\n",head);
-		write(fd,buffer,strlen(buffer));
+		n+=sprintf(&buffer[n],"<H2>%s</H2>\n",head);
 	}
 	if(body) {
-		sprintf(buffer,"%s<P>\n",body);
-		write(fd,buffer,strlen(buffer));
+		n+=sprintf(&buffer[n],"%s<P>\n",body);
 	}
-	sprintf(buffer,"</BODY>\n");
-	write(fd,buffer,strlen(buffer));
+	n+=sprintf(&buffer[n],"</BODY>\n");
+    sendrmsg(fd,n);
+	write(fd,buffer,n);
 }
 
 void sendfile2socket(int fd,const char *dir,const char *file)
@@ -83,6 +97,7 @@ void sendfile2socket(int fd,const char *dir,const char *file)
 	buffer=(char *)malloc(n+1);
 	fseek(fp,0L,SEEK_SET); 
 	fread(buffer,n,1,fp); 
+    sendrmsg(fd,n);
 	write(fd,buffer,n);
 	fclose(fp);
     
